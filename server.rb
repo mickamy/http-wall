@@ -1,6 +1,8 @@
 require 'sinatra'
 
 get '/' do
-  'Hello world!'
+  env = request.env.reject { |k, _| k.match?(/rack|sinatra/) }
+  env.reduce('') do |acc, item|
+    acc + "#{item.join(':')}\n"
+  end
 end
-
